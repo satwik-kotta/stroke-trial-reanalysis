@@ -1,0 +1,1391 @@
+{
+  "checks": {
+    "patients": 19435,
+    "columns": 112,
+    "duplicate_rows": 0,
+    "aspirin_arms": {
+      "N": 9715,
+      "Y": 9720
+    },
+    "heparin_arms": {
+      "H": 245,
+      "L": 4861,
+      "M": 4611,
+      "N": 9718
+    },
+    "pilot_high_dose_coded_H": 245,
+    "outcome_6m_missing_code_8_9": 53,
+    "outcome_6m_undocumented_code_0": 97,
+    "outcome_6m_known": 19285,
+    "atrial_fibrillation_blank": 984,
+    "final_diagnosis_not_stroke": 420,
+    "age_range": [16, 99],
+    "delay_hours_range": [1, 48],
+    "sbp_range": [70, 295],
+    "time_to_death_missing": 2,
+    "died_but_flag_mismatch": 1,
+    "aspirin_noncompliant": 927,
+    "heparin_noncompliant": 1063
+  },
+  "n_analysed_6m": 19285,
+  "baseline": [
+    {
+      "variable": "Age, years (mean)",
+      "aspirin": 71.733333,
+      "no_aspirin": 71.697478,
+      "heparin": 71.739323,
+      "no_heparin": 71.6915,
+      "smd_aspirin": 0.003086,
+      "smd_heparin": 0.004116,
+      "continuous": true
+    },
+    {
+      "variable": "Female",
+      "aspirin": 0.469856,
+      "no_aspirin": 0.459187,
+      "heparin": 0.459916,
+      "no_heparin": 0.469129,
+      "smd_aspirin": 0.021392,
+      "smd_heparin": -0.018474,
+      "continuous": false
+    },
+    {
+      "variable": "Drowsy or unconscious",
+      "aspirin": 0.232202,
+      "no_aspirin": 0.232321,
+      "heparin": 0.232376,
+      "no_heparin": 0.232147,
+      "smd_aspirin": -0.000283,
+      "smd_heparin": 0.000544,
+      "continuous": false
+    },
+    {
+      "variable": "Total anterior circulation stroke",
+      "aspirin": 0.239403,
+      "no_aspirin": 0.23788,
+      "heparin": 0.238139,
+      "no_heparin": 0.239144,
+      "smd_aspirin": 0.003575,
+      "smd_heparin": -0.002356,
+      "continuous": false
+    },
+    {
+      "variable": "Atrial fibrillation",
+      "aspirin": 0.175788,
+      "no_aspirin": 0.167715,
+      "heparin": 0.168762,
+      "no_heparin": 0.174743,
+      "smd_aspirin": 0.021407,
+      "smd_heparin": -0.015856,
+      "continuous": false
+    },
+    {
+      "variable": "Hours from stroke to randomisation (mean)",
+      "aspirin": 20.136934,
+      "no_aspirin": 20.111786,
+      "heparin": 20.013893,
+      "no_heparin": 20.234822,
+      "smd_aspirin": 0.002017,
+      "smd_heparin": -0.017717,
+      "continuous": true
+    },
+    {
+      "variable": "Systolic BP, mmHg (mean)",
+      "aspirin": 160.002675,
+      "no_aspirin": 160.3158,
+      "heparin": 160.408356,
+      "no_heparin": 159.910064,
+      "smd_aspirin": -0.011341,
+      "smd_heparin": 0.018048,
+      "continuous": true
+    },
+    {
+      "variable": "CT scan before randomisation",
+      "aspirin": 0.667798,
+      "no_aspirin": 0.672465,
+      "heparin": 0.670989,
+      "no_heparin": 0.669274,
+      "smd_aspirin": -0.009926,
+      "smd_heparin": 0.003648,
+      "continuous": false
+    },
+    {
+      "variable": "Aspirin in previous 3 days",
+      "aspirin": 0.212528,
+      "no_aspirin": 0.214549,
+      "heparin": 0.216995,
+      "no_heparin": 0.210081,
+      "smd_aspirin": -0.00493,
+      "smd_heparin": 0.016872,
+      "continuous": false
+    }
+  ],
+  "primary": {
+    "aspirin": {
+      "crude": {
+        "events_treated": 6000,
+        "n_treated": 9639,
+        "events_control": 6125,
+        "n_control": 9646,
+        "risk_treated": 0.622471,
+        "risk_control": 0.634978,
+        "rd": -0.012507,
+        "low": -0.026138,
+        "high": 0.001131,
+        "p": 0.072265
+      },
+      "adjusted": {
+        "rd": -0.014813,
+        "low": -0.026095,
+        "high": -0.003682,
+        "se_boot": 0.00611,
+        "odds_ratio": 0.922372,
+        "or_low": 0.863493,
+        "or_high": 0.985267,
+        "p": 0.016349,
+        "n": 19285
+      }
+    },
+    "heparin": {
+      "crude": {
+        "events_treated": 6063,
+        "n_treated": 9641,
+        "events_control": 6062,
+        "n_control": 9644,
+        "risk_treated": 0.628877,
+        "risk_control": 0.628577,
+        "rd": 0.000299,
+        "low": -0.013336,
+        "high": 0.013935,
+        "p": 0.965688
+      },
+      "adjusted": {
+        "rd": -4.059697e-06,
+        "low": -0.013122,
+        "high": 0.011814,
+        "se_boot": 0.006386,
+        "odds_ratio": 0.999978,
+        "or_low": 0.936144,
+        "or_high": 1.068164,
+        "p": 0.999475,
+        "n": 19285
+      }
+    }
+  },
+  "dead6": {
+    "aspirin": {
+      "events_treated": 2073,
+      "n_treated": 9639,
+      "events_control": 2168,
+      "n_control": 9646,
+      "risk_treated": 0.215064,
+      "risk_control": 0.224756,
+      "rd": -0.009693,
+      "low": -0.021381,
+      "high": 0.001999,
+      "p": 0.104187
+    },
+    "heparin": {
+      "events_treated": 2165,
+      "n_treated": 9641,
+      "events_control": 2076,
+      "n_control": 9644,
+      "risk_treated": 0.224562,
+      "risk_control": 0.215263,
+      "rd": 0.009298,
+      "low": -0.002393,
+      "high": 0.020987,
+      "p": 0.119043
+    }
+  },
+  "factorial_interaction_p": 0.133972,
+  "events14": [
+    {
+      "comparison": "Aspirin vs none",
+      "event": "Death",
+      "treated": 0.089712,
+      "control": 0.093567,
+      "per_1000": -3.854715,
+      "low": -11.973057,
+      "high": 4.261294,
+      "p": 0.351703
+    },
+    {
+      "comparison": "Low dose heparin vs none",
+      "event": "Death",
+      "treated": 0.087225,
+      "control": 0.093126,
+      "per_1000": -5.901307,
+      "low": -15.554714,
+      "high": 4.089597,
+      "p": 0.243186
+    },
+    {
+      "comparison": "Medium dose heparin vs none",
+      "event": "Death",
+      "treated": 0.093081,
+      "control": 0.093126,
+      "per_1000": -0.045433,
+      "low": -9.892043,
+      "high": 10.1407,
+      "p": 0.992902
+    },
+    {
+      "comparison": "Aspirin vs none",
+      "event": "Recurrent ischaemic stroke",
+      "treated": 0.015741,
+      "control": 0.02491,
+      "per_1000": -9.169192,
+      "low": -13.179346,
+      "high": -5.213372,
+      "p": 5.913626e-06
+    },
+    {
+      "comparison": "Low dose heparin vs none",
+      "event": "Recurrent ischaemic stroke",
+      "treated": 0.014606,
+      "control": 0.022947,
+      "per_1000": -8.34106,
+      "low": -12.71285,
+      "high": -3.643654,
+      "p": 0.000731
+    },
+    {
+      "comparison": "Medium dose heparin vs none",
+      "event": "Recurrent ischaemic stroke",
+      "treated": 0.020799,
+      "control": 0.022947,
+      "per_1000": -2.148097,
+      "low": -6.984116,
+      "high": 3.071535,
+      "p": 0.407065
+    },
+    {
+      "comparison": "Aspirin vs none",
+      "event": "Haemorrhagic stroke",
+      "treated": 0.008951,
+      "control": 0.007617,
+      "per_1000": 1.33353,
+      "low": -1.233572,
+      "high": 3.921248,
+      "p": 0.30511
+    },
+    {
+      "comparison": "Low dose heparin vs none",
+      "event": "Haemorrhagic stroke",
+      "treated": 0.0072,
+      "control": 0.004219,
+      "per_1000": 2.981189,
+      "low": 0.466996,
+      "high": 5.989059,
+      "p": 0.018448
+    },
+    {
+      "comparison": "Medium dose heparin vs none",
+      "event": "Haemorrhagic stroke",
+      "treated": 0.017504,
+      "control": 0.004219,
+      "per_1000": 13.285144,
+      "low": 9.637557,
+      "high": 17.520517,
+      "p": 3.195338e-16
+    },
+    {
+      "comparison": "Aspirin vs none",
+      "event": "Major extracranial bleed",
+      "treated": 0.011214,
+      "control": 0.005867,
+      "per_1000": 5.346776,
+      "low": 2.773243,
+      "high": 8.002059,
+      "p": 0.000051
+    },
+    {
+      "comparison": "Low dose heparin vs none",
+      "event": "Major extracranial bleed",
+      "treated": 0.006172,
+      "control": 0.003807,
+      "per_1000": 2.364202,
+      "low": 0.026248,
+      "high": 5.18906,
+      "p": 0.046618
+    },
+    {
+      "comparison": "Medium dose heparin vs none",
+      "event": "Major extracranial bleed",
+      "treated": 0.020387,
+      "control": 0.003807,
+      "per_1000": 16.579782,
+      "low": 12.692699,
+      "high": 21.073065,
+      "p": 9.962138e-23
+    },
+    {
+      "comparison": "Aspirin vs none",
+      "event": "Death or recurrent stroke",
+      "treated": 0.11286,
+      "control": 0.124447,
+      "per_1000": -11.58665,
+      "low": -20.68262,
+      "high": -2.49337,
+      "p": 0.012507
+    },
+    {
+      "comparison": "Low dose heparin vs none",
+      "event": "Death or recurrent stroke",
+      "treated": 0.108002,
+      "control": 0.120498,
+      "per_1000": -12.495576,
+      "low": -23.206455,
+      "high": -1.466246,
+      "p": 0.026524
+    },
+    {
+      "comparison": "Medium dose heparin vs none",
+      "event": "Death or recurrent stroke",
+      "treated": 0.125618,
+      "control": 0.120498,
+      "per_1000": 5.119748,
+      "low": -6.075835,
+      "high": 16.63034,
+      "p": 0.373733
+    }
+  ],
+  "heparin_dose": {
+    "table": [
+      {
+        "dose": "None",
+        "dd6": 0.628577,
+        "n": 9718,
+        "_row": "N"
+      },
+      {
+        "dose": "Low",
+        "dd6": 0.631306,
+        "n": 4861,
+        "_row": "L"
+      },
+      {
+        "dose": "Medium",
+        "dd6": 0.626451,
+        "n": 4856,
+        "_row": "M"
+      }
+    ],
+    "trend_p": 0.677193
+  },
+  "km": {
+    "aspirin": [
+      {
+        "arm": "0",
+        "day": 0,
+        "surv": 0.997941,
+        "low": 0.99704,
+        "high": 0.998843,
+        "at_risk": 9714
+      },
+      {
+        "arm": "0",
+        "day": 7,
+        "surv": 0.93988,
+        "low": 0.935165,
+        "high": 0.944619,
+        "at_risk": 9194
+      },
+      {
+        "arm": "0",
+        "day": 14,
+        "surv": 0.906418,
+        "low": 0.900645,
+        "high": 0.912229,
+        "at_risk": 8837
+      },
+      {
+        "arm": "0",
+        "day": 30,
+        "surv": 0.868181,
+        "low": 0.861478,
+        "high": 0.874936,
+        "at_risk": 8430
+      },
+      {
+        "arm": "0",
+        "day": 60,
+        "surv": 0.833268,
+        "low": 0.825884,
+        "high": 0.840717,
+        "at_risk": 8076
+      },
+      {
+        "arm": "0",
+        "day": 90,
+        "surv": 0.814148,
+        "low": 0.806443,
+        "high": 0.821926,
+        "at_risk": 7880
+      },
+      {
+        "arm": "0",
+        "day": 120,
+        "surv": 0.799353,
+        "low": 0.791421,
+        "high": 0.807364,
+        "at_risk": 7726
+      },
+      {
+        "arm": "0",
+        "day": 150,
+        "surv": 0.78678,
+        "low": 0.778668,
+        "high": 0.794977,
+        "at_risk": 7502
+      },
+      {
+        "arm": "0",
+        "day": 183,
+        "surv": 0.775375,
+        "low": 0.767083,
+        "high": 0.783756,
+        "at_risk": 5602
+      },
+      {
+        "arm": "1",
+        "day": 0,
+        "surv": 0.996399,
+        "low": 0.995209,
+        "high": 0.99759,
+        "at_risk": 9719
+      },
+      {
+        "arm": "1",
+        "day": 7,
+        "surv": 0.937544,
+        "low": 0.932745,
+        "high": 0.942367,
+        "at_risk": 9172
+      },
+      {
+        "arm": "1",
+        "day": 14,
+        "surv": 0.91027,
+        "low": 0.904606,
+        "high": 0.91597,
+        "at_risk": 8873
+      },
+      {
+        "arm": "1",
+        "day": 30,
+        "surv": 0.871947,
+        "low": 0.865328,
+        "high": 0.878618,
+        "at_risk": 8470
+      },
+      {
+        "arm": "1",
+        "day": 60,
+        "surv": 0.838597,
+        "low": 0.83131,
+        "high": 0.845947,
+        "at_risk": 8125
+      },
+      {
+        "arm": "1",
+        "day": 90,
+        "surv": 0.820198,
+        "low": 0.812593,
+        "high": 0.827875,
+        "at_risk": 7934
+      },
+      {
+        "arm": "1",
+        "day": 120,
+        "surv": 0.806645,
+        "low": 0.798824,
+        "high": 0.814542,
+        "at_risk": 7795
+      },
+      {
+        "arm": "1",
+        "day": 150,
+        "surv": 0.796358,
+        "low": 0.788382,
+        "high": 0.804414,
+        "at_risk": 7597
+      },
+      {
+        "arm": "1",
+        "day": 183,
+        "surv": 0.78529,
+        "low": 0.777133,
+        "high": 0.793534,
+        "at_risk": 5667
+      }
+    ],
+    "heparin": [
+      {
+        "arm": "0",
+        "day": 0,
+        "surv": 0.996604,
+        "low": 0.995448,
+        "high": 0.997761,
+        "at_risk": 9717
+      },
+      {
+        "arm": "0",
+        "day": 7,
+        "surv": 0.935783,
+        "low": 0.930921,
+        "high": 0.940669,
+        "at_risk": 9161
+      },
+      {
+        "arm": "0",
+        "day": 14,
+        "surv": 0.906864,
+        "low": 0.901104,
+        "high": 0.912661,
+        "at_risk": 8843
+      },
+      {
+        "arm": "0",
+        "day": 30,
+        "surv": 0.867825,
+        "low": 0.861116,
+        "high": 0.874586,
+        "at_risk": 8432
+      },
+      {
+        "arm": "0",
+        "day": 60,
+        "surv": 0.838297,
+        "low": 0.831005,
+        "high": 0.845653,
+        "at_risk": 8126
+      },
+      {
+        "arm": "0",
+        "day": 90,
+        "surv": 0.820837,
+        "low": 0.813242,
+        "high": 0.828502,
+        "at_risk": 7944
+      },
+      {
+        "arm": "0",
+        "day": 120,
+        "surv": 0.808119,
+        "low": 0.800321,
+        "high": 0.815993,
+        "at_risk": 7815
+      },
+      {
+        "arm": "0",
+        "day": 150,
+        "surv": 0.796484,
+        "low": 0.788511,
+        "high": 0.804538,
+        "at_risk": 7605
+      },
+      {
+        "arm": "0",
+        "day": 183,
+        "surv": 0.78495,
+        "low": 0.77679,
+        "high": 0.793196,
+        "at_risk": 5680
+      },
+      {
+        "arm": "1",
+        "day": 0,
+        "surv": 0.997736,
+        "low": 0.996791,
+        "high": 0.998681,
+        "at_risk": 9716
+      },
+      {
+        "arm": "1",
+        "day": 7,
+        "surv": 0.941641,
+        "low": 0.936991,
+        "high": 0.946314,
+        "at_risk": 9205
+      },
+      {
+        "arm": "1",
+        "day": 14,
+        "surv": 0.909824,
+        "low": 0.904146,
+        "high": 0.915538,
+        "at_risk": 8867
+      },
+      {
+        "arm": "1",
+        "day": 30,
+        "surv": 0.872304,
+        "low": 0.865691,
+        "high": 0.878967,
+        "at_risk": 8468
+      },
+      {
+        "arm": "1",
+        "day": 60,
+        "surv": 0.833565,
+        "low": 0.826187,
+        "high": 0.84101,
+        "at_risk": 8075
+      },
+      {
+        "arm": "1",
+        "day": 90,
+        "surv": 0.813507,
+        "low": 0.805791,
+        "high": 0.821296,
+        "at_risk": 7870
+      },
+      {
+        "arm": "1",
+        "day": 120,
+        "surv": 0.797874,
+        "low": 0.78992,
+        "high": 0.805908,
+        "at_risk": 7706
+      },
+      {
+        "arm": "1",
+        "day": 150,
+        "surv": 0.78665,
+        "low": 0.778535,
+        "high": 0.79485,
+        "at_risk": 7494
+      },
+      {
+        "arm": "1",
+        "day": 183,
+        "surv": 0.775711,
+        "low": 0.767422,
+        "high": 0.78409,
+        "at_risk": 5589
+      }
+    ]
+  },
+  "cox": {
+    "aspirin": {
+      "hr": 0.964954,
+      "low": 0.908457,
+      "high": 1.024966,
+      "p": 0.246498,
+      "ph_test_p_treatment": 0.200697,
+      "ph_test_p_global": 1.086059e-70
+    },
+    "heparin": {
+      "hr": 1.052526,
+      "low": 0.990968,
+      "high": 1.117909,
+      "p": 0.095936,
+      "ph_test_p_treatment": 0.017875,
+      "ph_test_p_global": 1.086059e-70
+    }
+  },
+  "subgroups": {
+    "aspirin": [
+      {
+        "subgroup": "age_g",
+        "level": "Under 70",
+        "n": 7180,
+        "risk_treated": 0.470195,
+        "risk_control": 0.481894,
+        "rd": -0.011699,
+        "low": -0.03478,
+        "high": 0.0114,
+        "p_interaction": 0.896744,
+        "label": "Age",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "age_g",
+        "level": "70 to 79",
+        "n": 6645,
+        "risk_treated": 0.641413,
+        "risk_control": 0.65096,
+        "rd": -0.009548,
+        "low": -0.032523,
+        "high": 0.01344,
+        "p_interaction": 0.896744,
+        "label": "Age",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "age_g",
+        "level": "80 and over",
+        "n": 5460,
+        "risk_treated": 0.799342,
+        "risk_control": 0.817181,
+        "rd": -0.017839,
+        "low": -0.038711,
+        "high": 0.003052,
+        "p_interaction": 0.896744,
+        "label": "Age",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sex",
+        "level": "M",
+        "n": 10319,
+        "risk_treated": 0.557839,
+        "risk_control": 0.575432,
+        "rd": -0.017593,
+        "low": -0.036698,
+        "high": 0.001529,
+        "p_interaction": 0.70769,
+        "label": "Sex",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sex",
+        "level": "F",
+        "n": 8966,
+        "risk_treated": 0.695364,
+        "risk_control": 0.704914,
+        "rd": -0.00955,
+        "low": -0.028504,
+        "high": 0.009421,
+        "p_interaction": 0.70769,
+        "label": "Sex",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "consc",
+        "level": "Alert",
+        "n": 14809,
+        "risk_treated": 0.542336,
+        "risk_control": 0.559292,
+        "rd": -0.016956,
+        "low": -0.032966,
+        "high": -0.000934,
+        "p_interaction": 0.204209,
+        "label": "Consciousness",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "consc",
+        "level": "Drowsy",
+        "n": 4217,
+        "risk_treated": 0.882129,
+        "risk_control": 0.879792,
+        "rd": 0.002338,
+        "low": -0.017243,
+        "high": 0.021914,
+        "p_interaction": 0.204209,
+        "label": "Consciousness",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "consc",
+        "level": "Unconscious",
+        "n": 259,
+        "risk_treated": 0.984615,
+        "risk_control": 0.968992,
+        "rd": 0.015623,
+        "low": -0.027685,
+        "high": 0.062965,
+        "p_interaction": 0.204209,
+        "label": "Consciousness",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "stype",
+        "level": "PACS",
+        "n": 7847,
+        "risk_treated": 0.600819,
+        "risk_control": 0.624016,
+        "rd": -0.023197,
+        "low": -0.044727,
+        "high": -0.001639,
+        "p_interaction": 0.917052,
+        "label": "Stroke type",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "stype",
+        "level": "LACS",
+        "n": 4616,
+        "risk_treated": 0.481802,
+        "risk_control": 0.483536,
+        "rd": -0.001733,
+        "low": -0.030538,
+        "high": 0.027076,
+        "p_interaction": 0.917052,
+        "label": "Stroke type",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "stype",
+        "level": "POCS",
+        "n": 2218,
+        "risk_treated": 0.493274,
+        "risk_control": 0.497733,
+        "rd": -0.00446,
+        "low": -0.045993,
+        "high": 0.037094,
+        "p_interaction": 0.917052,
+        "label": "Stroke type",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "stype",
+        "level": "TACS",
+        "n": 4604,
+        "risk_treated": 0.862218,
+        "risk_control": 0.871951,
+        "rd": -0.009733,
+        "low": -0.029363,
+        "high": 0.0099,
+        "p_interaction": 0.917052,
+        "label": "Stroke type",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "af",
+        "level": "N",
+        "n": 15151,
+        "risk_treated": 0.58843,
+        "risk_control": 0.605858,
+        "rd": -0.017427,
+        "low": -0.033036,
+        "high": -0.001808,
+        "p_interaction": 0.660921,
+        "label": "Atrial fibrillation",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "af",
+        "level": "Y",
+        "n": 3153,
+        "risk_treated": 0.77964,
+        "risk_control": 0.798314,
+        "rd": -0.018674,
+        "low": -0.0471,
+        "high": 0.009849,
+        "p_interaction": 0.660921,
+        "label": "Atrial fibrillation",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "delay_g",
+        "level": "Up to 12 h",
+        "n": 7225,
+        "risk_treated": 0.651846,
+        "risk_control": 0.661003,
+        "rd": -0.009157,
+        "low": -0.031047,
+        "high": 0.012738,
+        "p_interaction": 0.955886,
+        "label": "Delay",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "delay_g",
+        "level": "13 to 24 h",
+        "n": 5528,
+        "risk_treated": 0.607934,
+        "risk_control": 0.630403,
+        "rd": -0.022469,
+        "low": -0.048023,
+        "high": 0.003135,
+        "p_interaction": 0.955886,
+        "label": "Delay",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "delay_g",
+        "level": "25 to 48 h",
+        "n": 6532,
+        "risk_treated": 0.602757,
+        "risk_control": 0.609734,
+        "rd": -0.006977,
+        "low": -0.030655,
+        "high": 0.016712,
+        "p_interaction": 0.955886,
+        "label": "Delay",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sbp_g",
+        "level": "Under 150",
+        "n": 6234,
+        "risk_treated": 0.629618,
+        "risk_control": 0.645582,
+        "rd": -0.015964,
+        "low": -0.039796,
+        "high": 0.007905,
+        "p_interaction": 0.196842,
+        "label": "Systolic BP",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sbp_g",
+        "level": "150 to 179",
+        "n": 7682,
+        "risk_treated": 0.619659,
+        "risk_control": 0.620895,
+        "rd": -0.001236,
+        "low": -0.022933,
+        "high": 0.02046,
+        "p_interaction": 0.196842,
+        "label": "Systolic BP",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sbp_g",
+        "level": "180 and over",
+        "n": 5369,
+        "risk_treated": 0.61799,
+        "risk_control": 0.643068,
+        "rd": -0.025078,
+        "low": -0.050858,
+        "high": 0.000742,
+        "p_interaction": 0.196842,
+        "label": "Systolic BP",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "ct_g",
+        "level": "CT before randomisation",
+        "n": 12912,
+        "risk_treated": 0.589827,
+        "risk_control": 0.605275,
+        "rd": -0.015448,
+        "low": -0.032353,
+        "high": 0.001468,
+        "p_interaction": 0.701014,
+        "label": "CT scan",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "ct_g",
+        "level": "No CT before",
+        "n": 6373,
+        "risk_treated": 0.68785,
+        "risk_control": 0.695858,
+        "rd": -0.008008,
+        "low": -0.030661,
+        "high": 0.014664,
+        "p_interaction": 0.701014,
+        "label": "CT scan",
+        "p_holm": 1
+      }
+    ],
+    "heparin": [
+      {
+        "subgroup": "age_g",
+        "level": "Under 70",
+        "n": 7180,
+        "risk_treated": 0.478285,
+        "risk_control": 0.473802,
+        "rd": 0.004484,
+        "low": -0.018611,
+        "high": 0.027572,
+        "p_interaction": 0.758261,
+        "label": "Age",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "age_g",
+        "level": "70 to 79",
+        "n": 6645,
+        "risk_treated": 0.641827,
+        "risk_control": 0.650588,
+        "rd": -0.008761,
+        "low": -0.031735,
+        "high": 0.014227,
+        "p_interaction": 0.758261,
+        "label": "Age",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "age_g",
+        "level": "80 and over",
+        "n": 5460,
+        "risk_treated": 0.811834,
+        "risk_control": 0.804673,
+        "rd": 0.007161,
+        "low": -0.013731,
+        "high": 0.028041,
+        "p_interaction": 0.758261,
+        "label": "Age",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sex",
+        "level": "M",
+        "n": 10319,
+        "risk_treated": 0.570467,
+        "risk_control": 0.562915,
+        "rd": 0.007552,
+        "low": -0.011566,
+        "high": 0.026664,
+        "p_interaction": 0.864609,
+        "label": "Sex",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sex",
+        "level": "F",
+        "n": 8966,
+        "risk_treated": 0.697297,
+        "risk_control": 0.702828,
+        "rd": -0.005531,
+        "low": -0.024497,
+        "high": 0.013434,
+        "p_interaction": 0.864609,
+        "label": "Sex",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "consc",
+        "level": "Alert",
+        "n": 14809,
+        "risk_treated": 0.5485,
+        "risk_control": 0.553125,
+        "rd": -0.004625,
+        "low": -0.020642,
+        "high": 0.011395,
+        "p_interaction": 0.073945,
+        "label": "Consciousness",
+        "p_holm": 0.517616
+      },
+      {
+        "subgroup": "consc",
+        "level": "Drowsy",
+        "n": 4217,
+        "risk_treated": 0.889943,
+        "risk_control": 0.871977,
+        "rd": 0.017966,
+        "low": -0.001597,
+        "high": 0.037546,
+        "p_interaction": 0.073945,
+        "label": "Consciousness",
+        "p_holm": 0.517616
+      },
+      {
+        "subgroup": "consc",
+        "level": "Unconscious",
+        "n": 259,
+        "risk_treated": 0.969466,
+        "risk_control": 0.984375,
+        "rd": -0.014909,
+        "low": -0.06165,
+        "high": 0.0288,
+        "p_interaction": 0.073945,
+        "label": "Consciousness",
+        "p_holm": 0.517616
+      },
+      {
+        "subgroup": "stype",
+        "level": "PACS",
+        "n": 7847,
+        "risk_treated": 0.606658,
+        "risk_control": 0.618214,
+        "rd": -0.011556,
+        "low": -0.033098,
+        "high": 0.009999,
+        "p_interaction": 0.036777,
+        "label": "Stroke type",
+        "p_holm": 0.294215
+      },
+      {
+        "subgroup": "stype",
+        "level": "LACS",
+        "n": 4616,
+        "risk_treated": 0.483088,
+        "risk_control": 0.482251,
+        "rd": 0.000837,
+        "low": -0.027971,
+        "high": 0.029642,
+        "p_interaction": 0.036777,
+        "label": "Stroke type",
+        "p_holm": 0.294215
+      },
+      {
+        "subgroup": "stype",
+        "level": "POCS",
+        "n": 2218,
+        "risk_treated": 0.497786,
+        "risk_control": 0.493113,
+        "rd": 0.004673,
+        "low": -0.036889,
+        "high": 0.04621,
+        "p_interaction": 0.036777,
+        "label": "Stroke type",
+        "p_holm": 0.294215
+      },
+      {
+        "subgroup": "stype",
+        "level": "TACS",
+        "n": 4604,
+        "risk_treated": 0.87701,
+        "risk_control": 0.857143,
+        "rd": 0.019867,
+        "low": 0.000244,
+        "high": 0.039496,
+        "p_interaction": 0.036777,
+        "label": "Stroke type",
+        "p_holm": 0.294215
+      },
+      {
+        "subgroup": "af",
+        "level": "N",
+        "n": 15151,
+        "risk_treated": 0.598974,
+        "risk_control": 0.59539,
+        "rd": 0.003585,
+        "low": -0.012032,
+        "high": 0.0192,
+        "p_interaction": 0.623793,
+        "label": "Atrial fibrillation",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "af",
+        "level": "Y",
+        "n": 3153,
+        "risk_treated": 0.78825,
+        "risk_control": 0.789277,
+        "rd": -0.001026,
+        "low": -0.029551,
+        "high": 0.027449,
+        "p_interaction": 0.623793,
+        "label": "Atrial fibrillation",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "delay_g",
+        "level": "Up to 12 h",
+        "n": 7225,
+        "risk_treated": 0.658664,
+        "risk_control": 0.654263,
+        "rd": 0.004402,
+        "low": -0.017491,
+        "high": 0.026291,
+        "p_interaction": 0.276568,
+        "label": "Delay",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "delay_g",
+        "level": "13 to 24 h",
+        "n": 5528,
+        "risk_treated": 0.609541,
+        "risk_control": 0.628984,
+        "rd": -0.019444,
+        "low": -0.045001,
+        "high": 0.006166,
+        "p_interaction": 0.276568,
+        "label": "Delay",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "delay_g",
+        "level": "25 to 48 h",
+        "n": 6532,
+        "risk_treated": 0.612174,
+        "risk_control": 0.600598,
+        "rd": 0.011577,
+        "low": -0.012126,
+        "high": 0.035248,
+        "p_interaction": 0.276568,
+        "label": "Delay",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "sbp_g",
+        "level": "Under 150",
+        "n": 6234,
+        "risk_treated": 0.650685,
+        "risk_control": 0.624684,
+        "rd": 0.026001,
+        "low": 0.002131,
+        "high": 0.049817,
+        "p_interaction": 0.112928,
+        "label": "Systolic BP",
+        "p_holm": 0.677569
+      },
+      {
+        "subgroup": "sbp_g",
+        "level": "150 to 179",
+        "n": 7682,
+        "risk_treated": 0.614865,
+        "risk_control": 0.625717,
+        "rd": -0.010852,
+        "low": -0.032539,
+        "high": 0.01085,
+        "p_interaction": 0.112928,
+        "label": "Systolic BP",
+        "p_holm": 0.677569
+      },
+      {
+        "subgroup": "sbp_g",
+        "level": "180 and over",
+        "n": 5369,
+        "risk_treated": 0.624129,
+        "risk_control": 0.637396,
+        "rd": -0.013267,
+        "low": -0.039049,
+        "high": 0.012553,
+        "p_interaction": 0.112928,
+        "label": "Systolic BP",
+        "p_holm": 0.677569
+      },
+      {
+        "subgroup": "ct_g",
+        "level": "CT before randomisation",
+        "n": 12912,
+        "risk_treated": 0.597431,
+        "risk_control": 0.597737,
+        "rd": -0.000306,
+        "low": -0.017218,
+        "high": 0.016606,
+        "p_interaction": 0.725366,
+        "label": "CT scan",
+        "p_holm": 1
+      },
+      {
+        "subgroup": "ct_g",
+        "level": "No CT before",
+        "n": 6373,
+        "risk_treated": 0.692767,
+        "risk_control": 0.690886,
+        "rd": 0.001881,
+        "low": -0.020785,
+        "high": 0.024542,
+        "p_interaction": 0.725366,
+        "label": "CT scan",
+        "p_holm": 1
+      }
+    ]
+  },
+  "sensitivity": [
+    {
+      "analysis": "Main: complete cases, adjusted",
+      "rd": -0.014813,
+      "low": -0.026095,
+      "high": -0.003682,
+      "p": 0.016349,
+      "n": 19285
+    },
+    {
+      "analysis": "Missing outcomes imputed (20 imputations)",
+      "rd": -0.014896,
+      "low": null,
+      "high": null,
+      "p": 0.015655,
+      "n": 19435,
+      "odds_ratio": 0.921978,
+      "or_low": 0.863202,
+      "or_high": 0.984755
+    },
+    {
+      "analysis": "Missing counted against aspirin",
+      "rd": -0.004851,
+      "low": -0.018438,
+      "high": 0.008738,
+      "p": 0.484169,
+      "n": 19435
+    },
+    {
+      "analysis": "Missing counted in favour of aspirin",
+      "rd": -0.020287,
+      "low": -0.033871,
+      "high": -0.006692,
+      "p": 0.003447,
+      "n": 19435
+    },
+    {
+      "analysis": "Per protocol: compliant with aspirin allocation",
+      "rd": -0.02203,
+      "low": -0.034738,
+      "high": -0.008518,
+      "p": 0.000523,
+      "n": 18356
+    },
+    {
+      "analysis": "Excluding final diagnosis of not a stroke",
+      "rd": -0.01595,
+      "low": -0.02793,
+      "high": -0.004189,
+      "p": 0.010324,
+      "n": 18872
+    },
+    {
+      "analysis": "Only patients scanned before randomisation",
+      "rd": -0.016537,
+      "low": -0.032157,
+      "high": -0.001888,
+      "p": 0.028626,
+      "n": 12912
+    }
+  ],
+  "mi_between_imputation_sd": 0.000435,
+  "prognostic": {
+    "auc": 0.777038,
+    "calibration_slope": 0.991473,
+    "calibration_in_the_large": 1.103703e-06,
+    "n": 19285,
+    "deciles": [
+      {
+        "decile": 1,
+        "predicted": 0.264363,
+        "observed": 0.26283
+      },
+      {
+        "decile": 2,
+        "predicted": 0.370699,
+        "observed": 0.361515
+      },
+      {
+        "decile": 3,
+        "predicted": 0.442874,
+        "observed": 0.44168
+      },
+      {
+        "decile": 4,
+        "predicted": 0.51307,
+        "observed": 0.507261
+      },
+      {
+        "decile": 5,
+        "predicted": 0.583734,
+        "observed": 0.599793
+      },
+      {
+        "decile": 6,
+        "predicted": 0.6631,
+        "observed": 0.664938
+      },
+      {
+        "decile": 7,
+        "predicted": 0.74977,
+        "observed": 0.764523
+      },
+      {
+        "decile": 8,
+        "predicted": 0.829678,
+        "observed": 0.829445
+      },
+      {
+        "decile": 9,
+        "predicted": 0.90479,
+        "observed": 0.896784
+      },
+      {
+        "decile": 10,
+        "predicted": 0.965221,
+        "observed": 0.958528
+      }
+    ]
+  },
+  "published": {
+    "aspirin_dd6": [62.2, 63.5],
+    "source": "IST Collaborative Group, Lancet 1997;349:1569-81"
+  }
+}

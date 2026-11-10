@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stroke Trial Reanalysis</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.5.0/echarts.min.js"></script>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1d1d1f;--muted:#6b6b70;--line:#e4e4e0;--accent:#2f5bd3;--accent2:#d9822b;--good:#2e8b57;--grey:#9a9aa0;--bad:#c2410c}
+@media (prefers-color-scheme:dark){:root{--bg:#141416;--card:#1d1d20;--ink:#ececec;--muted:#9b9ba1;--line:#2e2e33;--accent:#7b9cff;--accent2:#f0a055;--good:#5cc08a;--grey:#76767c;--bad:#fb923c}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;overflow-x:hidden}
+main{max-width:1120px;margin:0 auto;padding:28px 16px 60px}
+h1{font-size:26px;margin:0 0 4px}
+h2{font-size:17px;margin:0 0 4px}
+.sub{color:var(--muted);margin:0 0 22px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.kpi,.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;min-width:0}
+.kpi b{display:block;font-size:24px;letter-spacing:-.01em}
+.kpi span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid>*{min-width:0}
+@media (max-width:820px){.grid{grid-template-columns:1fr}}
+.card p.note{color:var(--muted);font-size:13px;margin:2px 0 10px}
+.chart{height:340px;width:100%}
+.tall{height:520px}
+.answer{border-left:4px solid var(--accent);background:var(--card);padding:14px 18px;border-radius:8px;margin:0 0 16px}
+.answer ul{margin:6px 0 0;padding-left:18px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--muted);font-weight:600}
+.tablewrap{overflow-x:auto;max-width:100%}
+.method{font-size:13.5px;color:var(--muted)}
+.method li{margin-bottom:4px}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+  <h1>Aspirin and heparin after acute ischaemic stroke: a reanalysis of the International Stroke Trial</h1>
+  <p class="sub">19,435 patients randomised in 36 countries between 1991 and 1996, in a 2 by 2 factorial design: aspirin or no aspirin, and heparin (low dose, medium dose or none). This page reproduces the trial's main results from the patient level data in R, then adds a benefit and harm comparison by heparin dose, survival models, corrected subgroup tests, sensitivity analyses for missing data and a cross validated prognostic model. <a href="https://github.com/satwik-kotta/stroke-trial-reanalysis">Code</a> · <a href="report.html">Statistical report</a></p>
+
+  <div class="answer" id="answer"></div>
+  <div class="kpis" id="kpis"></div>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Benefit and harm in the first 14 days, per 1,000 patients treated</h2>
+      <p class="note">Difference from the no treatment group with 95% Newcombe intervals. Below zero means fewer events.</p>
+      <div class="chart tall" id="harm"></div>
+    </div>
+    <div class="card">
+      <h2>Aspirin effect on death or dependency at 6 months: sensitivity analyses</h2>
+      <p class="note">Risk difference per 100 patients with 95% interval. The main analysis is adjusted for baseline prognosis, with a bootstrap interval.</p>
+      <div class="chart tall" id="sens"></div>
+    </div>
+    <div class="card">
+      <h2>Aspirin effect by subgroup</h2>
+      <p class="note">Death or dependency at 6 months, risk difference per 100 with 95% interval. p values test for interaction. After Holm correction for 8 factors every aspirin p value is 1.00.</p>
+      <div class="chart tall" id="subs"></div>
+    </div>
+    <div class="card">
+      <h2>Survival to 6 months</h2>
+      <p class="note">Kaplan Meier estimates by aspirin allocation, with 95% intervals. The adjusted hazard ratio is in the summary above.</p>
+      <div class="chart tall" id="km"></div>
+    </div>
+    <div class="card">
+      <h2>Prognostic model calibration</h2>
+      <p class="note">Logistic model on baseline factors, 5 fold cross validated. Predicted against observed risk of death or dependency by decile.</p>
+      <div class="chart" id="calib"></div>
+    </div>
+    <div class="card">
+      <h2>Randomisation check</h2>
+      <p class="note">Standardised mean differences between arms. Under 0.1 is balanced.</p>
+      <div class="tablewrap"><table id="bal"></table></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <h2>Methods and data checks</h2>
+    <ul class="method" id="method"></ul>
+  </div>
+</main>
+<script>
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const $=id=>document.getElementById(id);
+const f1=v=>(v*100).toFixed(1), f2=v=>(v*100).toFixed(2);
+const fp=p=>p<0.001?'p < 0.001':'p = '+(p<0.01?p.toFixed(3):p.toFixed(2));
+const axis=()=>({axisLine:{lineStyle:{color:css('--line')}},axisLabel:{color:css('--muted')},splitLine:{lineStyle:{color:css('--line')}}});
+const base=()=>({textStyle:{color:css('--ink'),fontFamily:'inherit'}});
+
+// horizontal forest plot: rows [{label, est, low, high, color}]
+function forest(el, rows, unit, leftPad){
+  const c=echarts.init($(el));
+  c.setOption({...base(),grid:{left:leftPad||210,right:28,top:10,bottom:34},
+    tooltip:{formatter:p=>{const r=rows[p.dataIndex];return `${r.label}<br>${r.est.toFixed(1)} ${unit} (${isFinite(r.low)?r.low.toFixed(1):'·'} to ${isFinite(r.high)?r.high.toFixed(1):'·'})`}},
+    yAxis:{type:'category',inverse:true,data:rows.map(r=>r.label),...axis(),axisLabel:{color:css('--muted'),fontSize:11.5}},
+    xAxis:{type:'value',name:unit,nameLocation:'middle',nameGap:24,nameTextStyle:{color:css('--muted')},...axis()},
+    series:[{type:'custom',renderItem:(p,api)=>{const y=api.coord([0,api.value(3)])[1];const lo=api.coord([api.value(1),0])[0],hi=api.coord([api.value(2),0])[0],m=api.coord([api.value(0),0])[0];
+      const col=rows[p.dataIndex].color||css('--accent');
+      return{type:'group',children:[{type:'line',shape:{x1:lo,y1:y,x2:hi,y2:y},style:{stroke:col,lineWidth:2}},{type:'rect',shape:{x:m-4.5,y:y-4.5,width:9,height:9},style:{fill:col}}]}},
+      data:rows.map((r,i)=>[r.est,isFinite(r.low)?r.low:r.est,isFinite(r.high)?r.high:r.est,i]),encode:{x:[0,1,2],y:3},z:3,
+      markLine:{silent:true,symbol:'none',data:[{xAxis:0}],lineStyle:{color:css('--muted'),type:'dashed'},label:{show:false}}}]});
+}
+
+fetch('data/results.json').then(r=>r.json()).then(d=>{
+  const A=d.primary.aspirin, H=d.primary.heparin, C=d.checks, E=d.events14;
+  const ev=(cmp,e)=>E.find(x=>x.comparison===cmp&&x.event===e);
+  const aI=ev('Aspirin vs none','Recurrent ischaemic stroke'), aS=ev('Aspirin vs none','Death or recurrent stroke');
+  const mH=ev('Medium dose heparin vs none','Haemorrhagic stroke'), mB=ev('Medium dose heparin vs none','Major extracranial bleed'), mI=ev('Medium dose heparin vs none','Recurrent ischaemic stroke');
+  const lI=ev('Low dose heparin vs none','Recurrent ischaemic stroke'), lH=ev('Low dose heparin vs none','Haemorrhagic stroke');
+  const S=d.subgroups.aspirin, Hs=d.subgroups.heparin;
+  const minHolm=Math.min(...S.map(x=>x.p_holm)), hStype=Hs.find(x=>x.subgroup==='stype');
+
+  $('answer').innerHTML=`<b>What the reanalysis shows</b><ul>
+   <li><b>Aspirin helps a little.</b> ${f1(A.crude.risk_treated)}% of aspirin patients were dead or dependent at 6 months against ${f1(A.crude.risk_control)}%, matching the published ${d.published.aspirin_dd6[0]}% and ${d.published.aspirin_dd6[1]}% (${fp(A.crude.p)}). Adjusting for baseline prognosis sharpens the estimate to ${Math.abs(A.adjusted.rd*100).toFixed(1)} fewer per 100 (95% CI ${Math.abs(A.adjusted.high*100).toFixed(1)} to ${Math.abs(A.adjusted.low*100).toFixed(1)}, ${fp(A.adjusted.p)}), because adjustment removes outcome variation that randomisation leaves in.</li>
+   <li><b>Heparin's benefit is cancelled by bleeding.</b> Medium dose heparin prevented ${Math.abs(mI.per_1000).toFixed(0)} recurrent ischaemic strokes per 1,000 but caused ${mH.per_1000.toFixed(0)} haemorrhagic strokes and ${mB.per_1000.toFixed(0)} major extracranial bleeds. Low dose prevented ${Math.abs(lI.per_1000).toFixed(0)} and caused ${lH.per_1000.toFixed(0)}. Neither dose changed death or dependency at 6 months (adjusted difference 0.0 per 100, 95% CI ${(H.adjusted.low*100).toFixed(1)} to ${(H.adjusted.high*100).toFixed(1)}).</li>
+   <li><b>No subgroup stands out once tests are corrected.</b> Heparin looked different by stroke type (${fp(hStype.p_interaction)}), but that does not survive Holm correction across 8 factors (p = ${hStype.p_holm.toFixed(2)}). For aspirin, the smallest corrected p value is ${minHolm.toFixed(2)}.</li>
+   <li><b>The aspirin result holds under every missing data assumption but the most extreme.</b> Multiple imputation gives the same answer. Only when every missing outcome is counted as a failure on aspirin and a success on control does it lose significance.</li></ul>`;
+
+  $('kpis').innerHTML=[
+    [C.patients.toLocaleString(),'patients randomised, analysed as randomised'],
+    [(100*d.n_analysed_6m/C.patients).toFixed(1)+'%','with a known 6 month outcome'],
+    [Math.abs(aS.per_1000).toFixed(0),'fewer deaths or recurrent strokes per 1,000 on aspirin in 14 days'],
+    [d.prognostic.auc.toFixed(3),'cross validated AUC of the prognostic model, calibration slope '+d.prognostic.calibration_slope.toFixed(2)]
+  ].map(([a,b])=>`<div class="kpi"><b>${a}</b><span>${b}</span></div>`).join('');
+
+  // benefit and harm
+  const evs=['Recurrent ischaemic stroke','Haemorrhagic stroke','Major extracranial bleed','Death','Death or recurrent stroke'];
+  const cmps=[['Aspirin vs none',css('--accent')],['Low dose heparin vs none',css('--accent2')],['Medium dose heparin vs none',css('--bad')]];
+  const hr=[];
+  evs.forEach(e=>cmps.forEach(([c,col])=>{const r=ev(c,e);hr.push({label:`${e}: ${c.replace(' vs none','')}`,est:r.per_1000,low:r.low,high:r.high,color:col})}));
+  forest('harm',hr,'per 1,000 patients',230);
+
+  // sensitivity
+  forest('sens',d.sensitivity.map((s,i)=>({label:s.analysis.replace('Main: complete cases, adjusted','Main analysis (adjusted)'),est:s.rd*100,low:s.low==null?NaN:s.low*100,high:s.high==null?NaN:s.high*100,color:i===0?css('--accent'):css('--grey')})),'per 100 patients',230);
+
+  // subgroups
+  const sr=[];let last='';
+  S.forEach(x=>{sr.push({label:(x.label!==last?`${x.label} (p ${x.p_interaction.toFixed(2)}): `:'')+x.level,est:x.rd*100,low:x.low*100,high:x.high*100});last=x.label});
+  forest('subs',sr,'per 100 patients',230);
+
+  // KM
+  const K=d.km.aspirin, kc=echarts.init($('km'));
+  const ser=(arm,name,col)=>{const r=K.filter(x=>String(x.arm)===arm);return[
+    {name,type:'line',step:'end',data:r.map(x=>[x.day,+(x.surv*100).toFixed(2)]),itemStyle:{color:col},lineStyle:{width:2.5},symbolSize:5},
+    {name:name+' 95% CI',type:'line',step:'end',data:r.map(x=>[x.day,+(x.low*100).toFixed(2)]),lineStyle:{color:col,type:'dashed',width:1},symbol:'none',tooltip:{show:false}},
+    {name:name+' 95% CI ',type:'line',step:'end',data:r.map(x=>[x.day,+(x.high*100).toFixed(2)]),lineStyle:{color:col,type:'dashed',width:1},symbol:'none',tooltip:{show:false}}]};
+  kc.setOption({...base(),grid:{left:48,right:20,top:40,bottom:40},legend:{top:0,data:['Aspirin','No aspirin'],textStyle:{color:css('--muted')}},tooltip:{trigger:'axis'},
+    xAxis:{type:'value',name:'days since randomisation',nameLocation:'middle',nameGap:26,max:183,...axis()},
+    yAxis:{type:'value',min:75,max:100,name:'% alive',nameTextStyle:{color:css('--muted')},...axis()},
+    series:[...ser('1','Aspirin',css('--accent')),...ser('0','No aspirin',css('--accent2'))],
+    graphic:[{type:'text',right:24,bottom:58,style:{text:`Adjusted HR ${d.cox.aspirin.hr.toFixed(2)} (${d.cox.aspirin.low.toFixed(2)} to ${d.cox.aspirin.high.toFixed(2)})`,fill:css('--muted'),font:'12px sans-serif'}}]});
+
+  // calibration
+  const D=d.prognostic.deciles;
+  echarts.init($('calib')).setOption({...base(),grid:{left:52,right:20,top:34,bottom:44},tooltip:{trigger:'item',formatter:p=>`decile ${D[p.dataIndex]?.decile??''}<br>predicted ${p.value[0]}%, observed ${p.value[1]}%`},
+    xAxis:{type:'value',min:0,max:100,name:'predicted %',nameLocation:'middle',nameGap:26,...axis()},yAxis:{type:'value',min:0,max:100,name:'observed %',nameTextStyle:{color:css('--muted')},...axis()},
+    series:[{type:'scatter',symbolSize:11,itemStyle:{color:css('--accent')},data:D.map(x=>[+(x.predicted*100).toFixed(1),+(x.observed*100).toFixed(1)])},
+            {type:'line',data:[[0,0],[100,100]],symbol:'none',lineStyle:{color:css('--muted'),type:'dashed'},tooltip:{show:false}}]});
+
+  // balance
+  $('bal').innerHTML='<tr><th>Baseline factor</th><th>Aspirin</th><th>No aspirin</th><th>SMD</th><th>Heparin</th><th>No heparin</th><th>SMD</th></tr>'+
+    d.baseline.map(b=>{const v=x=>b.continuous?x.toFixed(1):(x*100).toFixed(1)+'%';return `<tr><td>${b.variable}</td><td>${v(b.aspirin)}</td><td>${v(b.no_aspirin)}</td><td>${b.smd_aspirin.toFixed(3)}</td><td>${v(b.heparin)}</td><td>${v(b.no_heparin)}</td><td>${b.smd_heparin.toFixed(3)}</td></tr>`}).join('');
+
+  $('method').innerHTML=[
+    `Data: the International Stroke Trial database (version 2), released by the University of Edinburgh under an open licence (Sandercock et al., Trials 2011). One row per randomised patient, ${C.columns} variables. Analysis in R (survival, mice, splines); a SAS program in the repository runs the primary analyses with PROC FREQ, LOGISTIC, LIFETEST and PHREG.`,
+    `Checks: no duplicate records. The pilot phase coded medium dose heparin as H (${C.pilot_high_dose_coded_H} patients), merged with M as the database notes direct. The 6 month outcome is missing for ${C.outcome_6m_missing_code_8_9} patients coded 8 or 9 and ${C.outcome_6m_undocumented_code_0} coded 0, a code the documentation does not define, treated as missing. Atrial fibrillation was not recorded for ${C.atrial_fibrillation_blank} pilot patients, kept as their own level in adjusted models. ${C.final_diagnosis_not_stroke} patients turned out not to have had a stroke, kept in the main analysis as randomised.`,
+    `Primary outcome: dead or dependent at 6 months. Crude risk differences use Newcombe hybrid score intervals. The adjusted risk difference standardises predicted risks from a logistic model (age, delay and blood pressure as natural splines, sex, consciousness, stroke type, atrial fibrillation, visible infarct, CT scan, and the other factorial arm), with a 400 replicate bootstrap interval. The factorial interaction between aspirin and heparin was tested with a likelihood ratio test (p = ${d.factorial_interaction_p.toFixed(2)}), so each drug is analysed across the other's arms.`,
+    `Survival: Kaplan Meier to 183 days and a Cox model with the same adjustment. Proportional hazards held for aspirin (Schoenfeld test p = ${d.cox.aspirin.ph_test_p_treatment.toFixed(2)}) but not for some baseline factors such as consciousness, which mostly affect early deaths, so the hazard ratio is reported alongside the risk differences rather than in place of them.`,
+    `Subgroups: 8 baseline factors, each tested for interaction with a likelihood ratio test, with Holm correction across the 8. Sensitivity: multiple imputation by chained equations (20 imputations, pooled with Rubin's rules), worst and best case for missing outcomes, per protocol, excluding non strokes, and scanned patients only.`,
+    `Prognostic model: logistic regression on the same baseline factors, 5 fold cross validation, AUC ${d.prognostic.auc.toFixed(3)}, calibration slope ${d.prognostic.calibration_slope.toFixed(2)}.`,
+    `Limits: a trial from the 1990s, before thrombolysis and thrombectomy were routine, and 33% of patients had no CT scan before randomisation, so some had haemorrhagic strokes. The results describe aspirin and heparin as tested then, not current practice.`
+  ].map(x=>`<li>${x}</li>`).join('');
+});
+</script>
+</body>
+</html>
